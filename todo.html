@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo-Learn</title>
+</head>
+<style>
+body{
+    background-color: black;
+}
+.down{
+    display: grid;
+    grid-template-columns: 195px 131px 150px;
+    margin-top: 10px;
+}
+.css-date{
+    width: 140px;
+}
+.css-add{
+    width: 150px;
+    height: 35px;
+    color: white;
+    font-weight: bold;
+    background-color: rgb(5, 177, 5);
+    border: none;
+    border-radius: 3px;
+}
+input{
+    height: 30px;
+    font-size: 15px;
+    font-family: Arial;
+    padding-left: 10px;
+    border: none;
+    border-radius: 3px;
+}
+.css-input{
+    height: 27px;
+}
+.css-name,
+.css-date,
+.css-delete{
+    height: 35px;
+    padding-left: 10px;
+    margin-bottom: 5px;
+}
+.css-name,
+.css-date{
+    padding-top: 5px;
+    font-size: 17.3px;
+    font-family: Arial;
+    color: white;
+}
+.css-delete{
+    color: white;
+    font-weight: bold;
+    border: none;
+    background-color: rgb(214, 18, 18);
+    border-radius: 3px;
+}
+</style>
+<body>
+
+    <input class="js-input css-input" placeholder="Todo name">
+    <input class="js-date css-datetype" type="date">
+    <button class="css-add" onclick="addTodo();">Add</button>
+    <div class="js-list down"></div>
+
+    <p>
+    <button class="js-change" onclick="
+        const buttonElement = document.querySelector('.js-change');
+        
+        if(buttonElement.innerHTML ==='Start'){
+            buttonElement.innerHTML = 'Loading...';
+        }
+
+        setTimeout(function(){
+        if (buttonElement.innerHTML === 'Loading...'){
+            buttonElement.innerHTML = 'Finished';
+        } 
+    }, 1000);
+        ">Start</button>
+    </p>   
+
+    <script>
+        const todoList = [];
+       
+        renderTodoList();
+
+    function renderTodoList (){
+        let todoListHTML = '';
+        for (let i = 0; i < todoList.length; i++){
+            const todoObject = todoList[i]
+            const {name, date} = todoObject;
+            const html = `
+            <div class="css-name">${name}</div>
+            <div class="css-date">${date}</div>
+            <button class="css-delete" onclick="todoList.splice(${i}, 1); renderTodoList();">Delete</button>
+            `;
+            todoListHTML += html;
+        }
+        document.querySelector('.js-list').innerHTML = todoListHTML;
+    }
+
+        function addTodo(){
+            const inputElement = document.querySelector('.js-input');
+            const name = inputElement.value;
+
+        const dateElement = document.querySelector('.js-date');
+        const date = dateElement.value;
+
+            todoList.push({name,date});
+            inputElement.value = '';
+            console.log(todoList);
+
+            renderTodoList();
+        }
+
+        
+    </script>
+    
+</body>
+</html>
